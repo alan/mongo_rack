@@ -34,6 +34,7 @@ module Rack
         super
 
         host, port, db_name, cltn_name = parse_server_desc( @default_options[:server] )
+        user, password = @default_options[:user], @default_options[:password]
         
         @mutex      = Mutex.new      
         @connection = ::Mongo::Connection.new( 
@@ -41,7 +42,7 @@ module Rack
           port,
           :pool_size => @default_options[:pool_size],
           :timeout   => @default_options[:pool_timeout] )
-        @db         = @connection.db( db_name )
+        @db         = @connection.db( db_name ).authenticate( user, password )
         @sessions   = @db[cltn_name]
 
         @logger = ::Logger.new( $stdout )
