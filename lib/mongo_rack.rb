@@ -42,7 +42,8 @@ module Rack
           port,
           :pool_size => @default_options[:pool_size],
           :timeout   => @default_options[:pool_timeout] )
-        @db         = @connection.db( db_name ).authenticate( user, password )
+        @db         = @connection.db( db_name )
+        @db.authenticate( user, password )
         @sessions   = @db[cltn_name]
 
         @logger = ::Logger.new( $stdout )
