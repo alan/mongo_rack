@@ -35,7 +35,6 @@ module Rack
 
         host, port, db_name, cltn_name = parse_server_desc( @default_options[:server] )
         user, password = @default_options[:user], @default_options[:password]
-        raise @default_options.inspect
         @mutex      = Mutex.new      
         @connection = ::Mongo::Connection.new( 
           host, 
